@@ -1,0 +1,20 @@
+name: Issue Comment Injection Lab
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Simulate Vulnerable Action
+        env:
+          NPM_TOKEN: "secret-npm-token-12345"
+        run: |
+          echo "Nouveau commentaire détecté :"
+          # VULNERABILITÉ ICI : Évaluation directe du corps du commentaire dans le shell
+          echo "${{ github.event.comment.body }}"
